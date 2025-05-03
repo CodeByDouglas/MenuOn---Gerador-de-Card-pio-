@@ -29,10 +29,10 @@ body::before {
 }
 
 /* Container do formulário */
-.login-container {
+.cadastro-container {
   position: relative;
   z-index: 1;
-  background-color: #1C1C1C;
+  background-color: #1C1C1C; /* fundo escuro sólido */
   padding: 2.5rem 2rem;
   border-radius: 12px;
   width: 100%;
@@ -42,7 +42,7 @@ body::before {
 }
 
 /* Título */
-.login-container h2 {
+.cadastro-container h2 {
   text-align: center;
   margin-bottom: 1.5rem;
   color: #F5F5F5;
@@ -70,8 +70,33 @@ body::before {
   color: #F5F5F5;
 }
 
-/* Botão de login */
-.btn-login {
+/* Campo de link personalizado */
+.link-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #2B2B2B;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #555;
+  border-radius: 8px;
+}
+
+.link-wrapper span {
+  color: #AAAAAA;
+  font-size: 0.9rem;
+}
+
+.link-wrapper input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #F5F5F5;
+  width: 100%;
+  font-size: 1rem;
+}
+
+/* Botão de cadastro */
+.btn-cadastro {
   width: 100%;
   padding: 0.9rem;
   background-color: #D7263D;
@@ -83,7 +108,7 @@ body::before {
   transition: background 0.3s ease;
 }
 
-.btn-login:hover {
+.btn-cadastro:hover {
   background-color: #c31f35;
 }
 
@@ -95,15 +120,11 @@ body::before {
   color: #AAAAAA;
 }
 
-/* Botão Voltar */
-.btn-voltar {
-  display: inline-block;
-  margin-top: 0.8rem;
+.footer-text a {
   color: #D7263D;
   text-decoration: none;
-  font-size: 0.9rem;
 }
 
-.btn-voltar:hover {
+.footer-text a:hover {
   text-decoration: underline;
 }
