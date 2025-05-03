@@ -2,6 +2,7 @@ from flask import Flask
 from dotenv import load_dotenv
 import os
 from .controllers.Criar_Tabelas import criar_tabelas
+from .controllers.logar_user import logar_user
 
 load_dotenv()
 
@@ -14,11 +15,13 @@ def create_app():
     from .routes import main_bp
     app.register_blueprint(main_bp)
     app.register_blueprint(criar_tabelas)
+    app.register_blueprint(logar_user)
 
+    # Utiliza as variáveis corretas definidas em .env para a conexão com o banco
+    app.config['DB_HOST']            = os.getenv('DB_HOST', 'localhost')
+    app.config['DB_PORT']            = os.getenv('DB_PORT', '5432')
+    app.config['POSTGRES_DB']        = os.getenv('POSTGRES_DB')
+    app.config['POSTGRES_USER']      = os.getenv('POSTGRES_USER')
+    app.config['POSTGRES_PASSWORD']  = os.getenv('POSTGRES_PASSWORD')
     
-    app.config['DB_HOST']     = os.getenv('DB_HOST')
-    app.config['DB_NAME']     = os.getenv('DB_NAME')
-    app.config['DB_PORT']     = os.getenv('DB_PORT')
-    app.config['DB_USER']     = os.getenv('DB_USER')
-    app.config['DB_PASSWORD'] = os.getenv('DB_PASSWORD')
     return app

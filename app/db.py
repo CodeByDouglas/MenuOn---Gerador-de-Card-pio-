@@ -4,9 +4,9 @@ from flask import current_app
 def get_connection():
     cfg = current_app.config
     return psycopg2.connect(
-        host=cfg['DB_HOST'],
-        port=cfg['DB_PORT'],
-        dbname=cfg['DB_NAME'],
-        user=cfg['DB_USER'],
-        password=cfg['DB_PASSWORD']
+        host=cfg.get('DB_HOST', 'localhost'),
+        port=cfg.get('DB_PORT', '5432'),
+        dbname=cfg['POSTGRES_DB'],
+        user=cfg['POSTGRES_USER'],
+        password=cfg['POSTGRES_PASSWORD']
     )
