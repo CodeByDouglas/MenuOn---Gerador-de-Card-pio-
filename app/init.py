@@ -5,6 +5,7 @@ from .controllers.Criar_Tabelas import criar_tabelas
 from .controllers.logar_user import logar_user
 from .controllers.Cadastrar_user import cadastrar_user
 from .controllers.Cadastrar_cardapio import cadastrar_bp
+from .controllers.Consultar_itens_cardapio import consultar_itens_cardapio_bp
 
 load_dotenv()
 
@@ -20,6 +21,7 @@ def create_app():
     app.register_blueprint(logar_user)
     app.register_blueprint(cadastrar_user)
     app.register_blueprint(cadastrar_bp)
+    app.register_blueprint(consultar_itens_cardapio_bp)
 
     # Utiliza as variáveis corretas definidas em .env para a conexão com o banco
     app.config['DB_HOST']            = os.getenv('DB_HOST', 'localhost')
