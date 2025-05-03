@@ -14,3 +14,46 @@ pip install -r requirements.txt
 Rodar servidor Flask:
 
 python run.py
+
+Docker:
+
+1. Subindo o container
+   No terminal, com Docker rodando:
+
+bash
+Copiar
+Editar
+docker compose up -d
+-d roda em background.
+
+Se for a primeira vez, ele baixa a imagem (~200 MB).
+
+2. Verifique se tudo está vivo
+   bash
+   Copiar
+   Editar
+   docker compose ps
+   Você deve ver algo como:
+
+markdown
+Copiar
+Editar
+Name Command State Ports
+
+---
+
+meu-postgres_db_1 docker-entrypoint.sh postgres Up 0.0.0.0:5432->5432/tcp
+E, para logs:
+
+bash
+Copiar
+Editar
+docker compose logs -f db
+
+3. Conectando ao banco
+   Via terminal (psql)
+
+bash
+Copiar
+Editar
+psql -h localhost -U douglas -d meu_banco
