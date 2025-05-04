@@ -1,29 +1,27 @@
-from flask import Blueprint, request, jsonify
-import psycopg2
-from psycopg2 import pool
+from flask import Blueprint, jsonify
 from dotenv import load_dotenv
-import os
+from app.db import get_connection
 
 load_dotenv()
-# Renomeie a blueprint para "criar_tabelas"
 criar_tabelas = Blueprint('criar_tabelas', __name__)
-
-# Configuração do pool de conexões utilizando variáveis de ambiente
-try:
-    db_pool = psycopg2.pool.SimpleConnectionPool(
-        minconn=1,
-        maxconn=10,
-        user=os.getenv('POSTGRES_USER'),
-        password=os.getenv('POSTGRES_PASSWORD'),
-        host=os.getenv('DB_HOST', 'localhost'),
-        port=os.getenv('DB_PORT', '5432'),
-        database=os.getenv('POSTGRES_DB')
-    )
-except Exception as e:
-    print("Erro ao criar o pool de conexões:", e)
 
 @criar_tabelas.route('/criar-tabelas', methods=['POST'])
 def create_tables():
+    """
+    Endpoint para criação das tabelas necessárias no banco de dados.
+    
+    Executa comandos SQL para criar as tabelas:
+      - restaurantes
+      - pratos
+      - bebidas
+      - sobremesas
+      
+    Cada tabela é criada apenas se não existir.
+    
+    Retorna:
+      - HTTP 201 com mensagem de sucesso se todas as tabelas forem criadas;
+      - HTTP 500 com mensagem de erro caso ocorra alguma exceção.
+    """
     comandos = [
         """CREATE TABLE IF NOT EXISTS restaurantes (
             id SERIAL PRIMARY KEY,
@@ -65,19 +63,15 @@ def create_tables():
         );"""
     ]
 
-    conn = None
     try:
-        conn = db_pool.getconn()
-        cursor = conn.cursor()
-        for comando in comandos:
-            cursor.execute(comando)
-        conn.commit()
-        cursor.close()
+        with get_connection() as conn:
+            with conn.cursor() as cursor:
+                # Executa cada comando SQL da lista
+                for comando in comandos:
+                    cursor.execute(comando)
+            conn.commit()
         return jsonify({"message": "Tabelas criadas com sucesso."}), 201
+
     except Exception as e:
-        if conn:
-            conn.rollback()
+        # Em caso de erro, a exceção é capturada e enviada no retorno
         return jsonify({"error": str(e)}), 500
-    finally:
-        if conn:
-            db_pool.putconn(conn)
