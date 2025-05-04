@@ -1,0 +1,109 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Corpo com imagem de fundo e camada de desfoque */
+body {
+  background: url('../img/fundo.jpg') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Camada de desfoque */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(2.3px);
+  -webkit-backdrop-filter: blur(2.3px);
+  z-index: 0;
+}
+
+/* Container do formulário */
+.login-container {
+  position: relative;
+  z-index: 1;
+  background-color: #1C1C1C;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+  color: #F5F5F5;
+}
+
+/* Título */
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #F5F5F5;
+}
+
+/* Grupos de inputs */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #F5F5F5;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #555;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #2B2B2B;
+  color: #F5F5F5;
+}
+
+/* Botão de login */
+.btn-login {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #D7263D;
+  color: #FFFFF7;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-login:hover {
+  background-color: #c31f35;
+}
+
+/* Texto inferior */
+.footer-text {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #AAAAAA;
+}
+
+/* Botão Voltar */
+.btn-voltar {
+  display: inline-block;
+  margin-top: 0.8rem;
+  color: #D7263D;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.btn-voltar:hover {
+  text-decoration: underline;
+}

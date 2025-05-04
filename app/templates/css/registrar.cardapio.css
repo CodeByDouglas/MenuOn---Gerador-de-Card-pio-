@@ -1,0 +1,106 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Fundo com imagem e blur */
+body {
+  background: url('../img/fundo.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start; /* <-- mudar de center para flex-start */
+  justify-content: center;
+  overflow-y: auto;
+  position: relative;
+  padding: 4rem 1rem 2rem; /* margem superior maior */
+}
+
+
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(2.3px);
+  -webkit-backdrop-filter: blur(2.3px);
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 0;
+}
+
+/* Container mais estreito */
+.cardapio-container {
+  position: relative;
+  z-index: 1;
+  background-color: #1C1C1C;
+  color: #F5F5F5;
+  padding: 2rem 1.5rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 480px; /* reduzido */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* Título */
+.cardapio-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+/* Seções */
+.cardapio-container h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.2rem;
+  color: #D7263D;
+}
+
+/* Campos */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="file"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #555;
+  background-color: #2B2B2B;
+  color: #F5F5F5;
+  font-size: 1rem;
+}
+
+/* Textarea */
+textarea {
+  resize: vertical;
+}
+
+/* Botão */
+.btn-cadastrar {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 0.8rem;
+  background-color: #D7263D;
+  color: #FFFFF7;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-cadastrar:hover {
+  background-color: #c31f35;
+}

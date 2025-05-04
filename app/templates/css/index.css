@@ -1,0 +1,73 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Fundo igual ao login */
+body {
+  background: url('../img/fundo.jpg') no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Camada de desfoque */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(2.3px);
+  -webkit-backdrop-filter: blur(2.3px);
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 0;
+}
+
+/* Container central */
+.home-container {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  background-color: #1C1C1C;
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  color: #F5F5F5;
+  max-width: 400px;
+}
+
+/* Título */
+.home-container h1 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.home-container h1 span {
+  color: #D7263D;
+}
+
+/* Botões */
+.btn-group {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  background-color: #D7263D;
+  color: #FFFFF7;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background-color: #c31f35;
+} 

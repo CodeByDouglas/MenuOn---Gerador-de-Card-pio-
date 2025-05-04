@@ -1,0 +1,130 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Corpo com imagem de fundo e camada de desfoque */
+body {
+  background: url('../img/fundo.jpg') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Camada de desfoque */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(2.3px);
+  -webkit-backdrop-filter: blur(2.3px);
+  z-index: 0;
+}
+
+/* Container do formulário */
+.cadastro-container {
+  position: relative;
+  z-index: 1;
+  background-color: #1C1C1C; /* fundo escuro sólido */
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+  color: #F5F5F5;
+}
+
+/* Título */
+.cadastro-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #F5F5F5;
+}
+
+/* Grupos de inputs */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #F5F5F5;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #555;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #2B2B2B;
+  color: #F5F5F5;
+}
+
+/* Campo de link personalizado */
+.link-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #2B2B2B;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #555;
+  border-radius: 8px;
+}
+
+.link-wrapper span {
+  color: #AAAAAA;
+  font-size: 0.9rem;
+}
+
+.link-wrapper input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #F5F5F5;
+  width: 100%;
+  font-size: 1rem;
+}
+
+/* Botão de cadastro */
+.btn-cadastro {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #D7263D;
+  color: #FFFFF7;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-cadastro:hover {
+  background-color: #c31f35;
+}
+
+/* Texto inferior */
+.footer-text {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #AAAAAA;
+}
+
+.footer-text a {
+  color: #D7263D;
+  text-decoration: none;
+}
+
+.footer-text a:hover {
+  text-decoration: underline;
+}
