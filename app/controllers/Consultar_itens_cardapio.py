@@ -1,9 +1,9 @@
 from flask import Blueprint, request, jsonify
-from app.sevices.consultar_itens_cardapio import consultar_itens_cardapio as consultar_service
+from app.sevices.def_consultar_itens_cardapio import consultar_itens_cardapio as consultar_service
 
-consultar_itens_cardapio_bp = Blueprint('consultar_itens_cardapio', __name__)
+consultar_itens_cardapio = Blueprint('consultar_itens_cardapio', __name__)
 
-@consultar_itens_cardapio_bp.route('/consultar-itens-cardapio', methods=['GET'])
+@consultar_itens_cardapio.route('/consultar-itens-cardapio', methods=['GET'])
 def consultar_itens_cardapio_endpoint():
     restaurante_id_txt = request.args.get('restaurante_id')
     if not restaurante_id_txt:

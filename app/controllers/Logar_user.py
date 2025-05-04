@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.sevices.autenticar_user import autenticar_user as autenticar_service
+from app.sevices.def_autenticar_user import autenticar_user as autenticar_service
 
 logar_user = Blueprint('logar_user', __name__)
 

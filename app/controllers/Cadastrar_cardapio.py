@@ -1,10 +1,10 @@
 from flask import Blueprint, request, jsonify
-from app.sevices.Cadastrar_cardapio import cadastrar_cardapio as cadastrar_cardapio_service
+from app.sevices.def_cadastrar_cardapio import cadastrar_cardapio as cadastrar_cardapio_service
 import psycopg2
 
-cadastrar_bp = Blueprint('cadastrar_cardapio', __name__)
+cadastrar_cardapio = Blueprint('cadastrar_cardapio', __name__)
 
-@cadastrar_bp.route('/cadastrar-cardapio', methods=['POST'])
+@cadastrar_cardapio.route('/cadastrar-cardapio', methods=['POST'])
 def cadastrar_cardapio_endpoint():
     # 1) Pega campos de texto do form-data
     restaurante_id = request.form.get('restaurante_id')
