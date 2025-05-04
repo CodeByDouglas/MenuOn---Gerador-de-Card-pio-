@@ -1,37 +1,44 @@
 import base64
 from app.db import get_connection
 
+# Dicionário com as queries, para facilitar a manutenção
+QUERIES = {
+    "pratos":    "SELECT id, nome, descricao, valor, imagem FROM pratos WHERE restaurante_id = %s;",
+    "sobremesas": "SELECT id, nome, descricao, valor, imagem FROM sobremesas WHERE restaurante_id = %s;",
+    "bebidas":   "SELECT id, nome, descricao, valor, imagem FROM bebidas WHERE restaurante_id = %s;",
+}
+
+def convert_imagem_to_base64(imagem):
+    """Converte a imagem para string codificada em base64, se disponível."""
+    if imagem is not None:
+        return base64.b64encode(bytes(imagem)).decode('utf-8')
+    return None
+
 def consultar_itens_cardapio(restaurante_id: int):
-    if not isinstance(restaurante_id, int):
+    try:
+        restaurante_id_int = int(restaurante_id)
+    except (ValueError, TypeError):
         print(f"[Erro] ID inválido: {restaurante_id!r}")
         return False
 
-    result = {"pratos": [], "sobremesas": [], "bebidas": []}
+    resultado = {"pratos": [], "sobremesas": [], "bebidas": []}
     try:
         with get_connection() as conn:
             with conn.cursor() as cur:
-                for key, qry in {
-                    "pratos":    "SELECT id, nome, descricao, valor, imagem FROM pratos WHERE restaurante_id = %s;",
-                    "sobremesas":"SELECT id, nome, descricao, valor, imagem FROM sobremesas WHERE restaurante_id = %s;",
-                    "bebidas":   "SELECT id, nome, descricao, valor, imagem FROM bebidas WHERE restaurante_id = %s;",
-                }.items():
-                    cur.execute(qry, (restaurante_id,))
+                for categoria, consulta in QUERIES.items():
+                    cur.execute(consulta, (restaurante_id_int,))
                     rows = cur.fetchall()
-                    items = []
-                    for id_, nome, desc, val, img in rows:
-                        # Convert image bytes (memoryview) to base64 string if available
-                        if img is not None:
-                            img = base64.b64encode(bytes(img)).decode('utf-8')
-                        items.append({
-                            "id": id_,
+                    itens = []
+                    for id_item, nome, descricao, valor, imagem in rows:
+                        itens.append({
+                            "id": id_item,
                             "nome": nome,
-                            "descricao": desc,
-                            "valor": float(val) if val is not None else None,
-                            "imagem": img
+                            "descricao": descricao,
+                            "valor": float(valor) if valor is not None else None,
+                            "imagem": convert_imagem_to_base64(imagem)
                         })
-                    result[key] = items
-
-        return result
+                    resultado[categoria] = itens
+        return resultado
 
     except Exception as e:
         print("Erro ao consultar itens do cardápio:", e)

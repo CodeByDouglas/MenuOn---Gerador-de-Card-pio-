@@ -3,15 +3,16 @@ import psycopg2
 
 def cadastrar_cardapio(restaurante_id: int, nome: str, valor: float, descricao: str, imagem: bytes, tipo: str):
     """
-    Insere um item de cardápio no banco de dados usando SQL puro.
-    Dependendo de 'tipo', aponta para a tabela correta:
+    Insere um item de cardápio no banco de dados.
+    
+    Dependendo de 'tipo', insere o registro na tabela correspondente:
       - 'prato'     → pratos
       - 'sobremesa' → sobremesas
       - 'bebida'    → bebidas
 
-    Retorna o id inserido em caso de sucesso, ou False em caso de erro.
+    Retorna o id do item inserido em caso de sucesso; caso contrário, retorna False.
     """
-    # Mapeamento tipo → nome da tabela
+    # Mapeia o tipo para a tabela correta
     tabelas = {
         'prato': 'pratos',
         'sobremesa': 'sobremesas',
@@ -19,7 +20,7 @@ def cadastrar_cardapio(restaurante_id: int, nome: str, valor: float, descricao: 
     }
     tabela = tabelas.get(tipo.lower())
     if not tabela:
-        print(f"[Erro] tipo inválido: {tipo!r}")
+        print(f"[Erro] Tipo inválido: {tipo!r}")
         return False
 
     sql = f"""
@@ -29,13 +30,12 @@ def cadastrar_cardapio(restaurante_id: int, nome: str, valor: float, descricao: 
     """
 
     try:
-        # O contexto do connection cuidará de commit/rollback automaticamente
         with get_connection() as conn:
-            with conn.cursor() as cur:
-                # Se 'imagem' for bytes, converte para Binary
+            with conn.cursor() as cursor:
+                # Converte imagem para Binary se necessário
                 img_param = psycopg2.Binary(imagem) if isinstance(imagem, (bytes, bytearray)) else imagem
-                cur.execute(sql, (restaurante_id, nome, valor, descricao, img_param))
-                new_id = cur.fetchone()[0]
+                cursor.execute(sql, (restaurante_id, nome, valor, descricao, img_param))
+                new_id = cursor.fetchone()[0]
         return new_id
 
     except Exception as e:
