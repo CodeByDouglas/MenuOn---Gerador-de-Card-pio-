@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cardápio - MenuOn</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/cardapio.css') }}"
+    />
+  </head>
+  <body>
+    <div class="cardapio-header">
+      <h1>Cardápio</h1>
+      <div class="tabs">
+        <button class="tab-button active" data-tab="pratos">Pratos</button>
+        <button class="tab-button" data-tab="bebidas">Bebidas</button>
+        <button class="tab-button" data-tab="sobremesas">Sobremesas</button>
+      </div>
+    </div>
+    <div class="cardapio-content">
+      <div id="pratos" class="content-section"></div>
+      <div id="bebidas" class="content-section" style="display: none"></div>
+      <div id="sobremesas" class="content-section" style="display: none"></div>
+    </div>
+    <div id="error-message" class="error-message"></div>
+    <script src="{{ url_for('static', filename='JS/cardapio.js') }}"></script>
+  </body>
+</html>

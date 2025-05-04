@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro - MenuOn</title>
+    <link rel="stylesheet" href="../static/css/cadastro.css" />
+  </head>
+  <body>
+    <div class="cadastro-container">
+      <h2>Criar Conta - MenuOn</h2>
+
+      <!-- onde vão aparecer erros -->
+      <div id="error-message" style="color: red; margin-bottom: 1em"></div>
+
+      <!-- form agora com id, sem onsubmit inline -->
+      <form id="cadastro-form">
+        <div class="form-group">
+          <label for="name">Nome do Restaurante</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Ex: Pizzaria Bella Massa"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="exemplo@menuon.com"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="********"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="confirm-password">Confirmar Senha</label>
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirm-password"
+            placeholder="********"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="custom-link">Link personalizado (opcional)</label>
+          <div class="link-wrapper">
+            <span>menuon.com/</span>
+            <input
+              type="text"
+              id="custom-link"
+              name="custom-link"
+              placeholder="nomerestaurante"
+            />
+          </div>
+        </div>
+
+        <button type="submit" class="btn-cadastro">Cadastrar</button>
+      </form>
+
+      <div class="footer-text">
+        Já tem uma conta? <a href="login.html">Login</a>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='JS/cadastro.js') }}"></script>
+  </body>
+</html>

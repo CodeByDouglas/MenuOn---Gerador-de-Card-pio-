@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registrar Cardápio - MenuOn</title>
+    <link rel="stylesheet" href="../static/css/registrar.cardapio.css" />
+  </head>
+  <body>
+    <script>
+      // Bloqueia acesso se não houver user_id no localStorage
+      const userId = localStorage.getItem("user_id");
+      if (!userId) {
+        window.location.href = "/login.html";
+      }
+    </script>
+
+    <div class="cardapio-container">
+      <h2>Cadastro de Cardápio</h2>
+
+      <!-- div para exibir erros -->
+      <div id="error-message" style="color: red; margin-bottom: 1em"></div>
+
+      <form id="cardapio-form">
+        <!-- Tipo de restaurante -->
+        <div class="form-group">
+          <label for="tipo-restaurante">Tipo de Restaurante</label>
+          <select id="tipo-restaurante" name="tipo-restaurante" required>
+            <option value="">Selecione</option>
+            <option value="pizzaria">Pizzaria</option>
+            <option value="hamburgueria">Hamburgueria</option>
+            <option value="brasileira">Comida Brasileira</option>
+            <option value="mexicana">Comida Mexicana</option>
+            <option value="japonesa">Comida Japonesa</option>
+            <option value="outro">Outro</option>
+          </select>
+        </div>
+
+        <!-- ... other content above ... -->
+
+        <!-- PRATOS -->
+        <h3>Pratos</h3>
+        <div class="form-group">
+          <label for="prato-nome">Nome do prato</label>
+          <input type="text" id="prato-nome" name="prato-nome" />
+        </div>
+        <div class="form-group">
+          <label for="prato-valor">Valor do prato</label>
+          <input
+            type="number"
+            id="prato-valor"
+            name="prato-valor"
+            placeholder="Ex: 25.00"
+            step="0.01"
+          />
+        </div>
+        <div class="form-group">
+          <label for="prato-descricao">Descrição</label>
+          <textarea
+            id="prato-descricao"
+            name="prato-descricao"
+            rows="3"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="prato-imagem">Imagem do prato</label>
+          <input
+            type="file"
+            id="prato-imagem"
+            name="prato-imagem"
+            accept="image/*"
+          />
+        </div>
+
+        <!-- BEBIDAS -->
+        <h3>Bebidas</h3>
+        <div class="form-group">
+          <label for="bebida-nome">Nome da bebida</label>
+          <input type="text" id="bebida-nome" name="bebida-nome" />
+        </div>
+        <div class="form-group">
+          <label for="bebida-valor">Valor da bebida</label>
+          <input
+            type="number"
+            id="bebida-valor"
+            name="bebida-valor"
+            placeholder="Ex: 10.00"
+            step="0.01"
+          />
+        </div>
+        <div class="form-group">
+          <label for="bebida-descricao">Descrição</label>
+          <textarea
+            id="bebida-descricao"
+            name="bebida-descricao"
+            rows="3"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="bebida-imagem">Imagem da bebida</label>
+          <input
+            type="file"
+            id="bebida-imagem"
+            name="bebida-imagem"
+            accept="image/*"
+          />
+        </div>
+
+        <!-- SOBREMESAS -->
+        <h3>Sobremesas</h3>
+        <div class="form-group">
+          <label for="sobremesa-nome">Nome da sobremesa</label>
+          <input type="text" id="sobremesa-nome" name="sobremesa-nome" />
+        </div>
+        <div class="form-group">
+          <label for="sobremesa-valor">Valor da sobremesa</label>
+          <input
+            type="number"
+            id="sobremesa-valor"
+            name="sobremesa-valor"
+            placeholder="Ex: 15.00"
+            step="0.01"
+          />
+        </div>
+        <div class="form-group">
+          <label for="sobremesa-descricao">Descrição</label>
+          <textarea
+            id="sobremesa-descricao"
+            name="sobremesa-descricao"
+            rows="3"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="sobremesa-imagem">Imagem da sobremesa</label>
+          <input
+            type="file"
+            id="sobremesa-imagem"
+            name="sobremesa-imagem"
+            accept="image/*"
+          />
+        </div>
+
+        <!-- ... remaining content ... -->
+
+        <!-- Botão de envio -->
+        <button type="submit" class="btn-cadastrar">Finalizar Cadastro</button>
+      </form>
+    </div>
+
+    <script>
+      // Inside the submit event listener in registrar.cardapio.html
+      document
+        .getElementById("cardapio-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const errorDiv = document.getElementById("error-message");
+          errorDiv.textContent = "";
+
+          const userId = localStorage.getItem("user_id");
+          const tipos = ["prato", "bebida", "sobremesa"];
+          let enviouAlgo = false;
+
+          for (const tipo of tipos) {
+            const nomeEl = document.getElementById(`${tipo}-nome`);
+            const valorEl = document.getElementById(`${tipo}-valor`);
+            const descEl = document.getElementById(`${tipo}-descricao`);
+            const imgEl = document.getElementById(`${tipo}-imagem`);
+
+            const nome = nomeEl.value.trim();
+            const valor = valorEl.value.trim();
+            const desc = descEl.value.trim();
+            const file = imgEl.files[0];
+
+            // Agora exige os 4 campos preenchidos (nome, valor, descrição e imagem)
+            const preenchidos = [nome, valor, desc, file].filter(
+              (v) => v
+            ).length;
+            if (preenchidos === 0) {
+              continue;
+            }
+            if (preenchidos !== 4) {
+              errorDiv.textContent = `Por favor, preencha ou limpe todos os campos de ${tipo}.`;
+              return;
+            }
+
+            // prepara o FormData para este tipo
+            const fd = new FormData();
+            fd.append("restaurante_id", userId);
+            fd.append("nome", nome);
+            fd.append("valor", valor);
+            fd.append("tipo", tipo);
+            fd.append("descricao", desc);
+            fd.append("imagem", file);
+
+            try {
+              const res = await fetch("/cadastrar-cardapio", {
+                method: "POST",
+                body: fd,
+              });
+              const data = await res.json();
+              if (!res.ok) {
+                throw new Error(data.error || `Erro ao cadastrar ${tipo}`);
+              }
+              console.log(`Item ${tipo} cadastrado com id`, data.id);
+              enviouAlgo = true;
+            } catch (err) {
+              errorDiv.textContent = err.message;
+              return;
+            }
+          }
+
+          if (!enviouAlgo) {
+            errorDiv.textContent = "Nenhum item para cadastrar.";
+            return;
+          }
+
+          // se chegou aqui, tudo ok
+          window.location.href = "/login/cardapio";
+        });
+    </script>
+  </body>
+</html>
