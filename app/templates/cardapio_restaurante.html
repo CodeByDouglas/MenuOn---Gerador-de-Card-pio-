@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cardápio - MenuOn</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/cardapio.css') }}"
+    />
+  </head>
+  <body>
+    <div class="cardapio-header">
+      <h1>Cardápio do Restaurante {{ restaurante_id }}</h1>
+      <div class="tabs">
+        <button class="tab-button active" data-tab="pratos">Pratos</button>
+        <button class="tab-button" data-tab="bebidas">Bebidas</button>
+        <button class="tab-button" data-tab="sobremesas">Sobremesas</button>
+      </div>
+    </div>
+    <div class="cardapio-content">
+      <div id="pratos" class="content-section">
+        {% if pratos %} {% for item in pratos %}
+        <div class="item-card">
+          <h3 class="item-name">{{ item.nome }}</h3>
+          {% if item.imagem %}
+          <img
+            class="item-image"
+            src="data:image/jpeg;base64,{{ item.imagem }}"
+            alt="{{ item.nome }}"
+          />
+          {% endif %}
+          <p class="item-description">{{ item.descricao }}</p>
+          <p class="item-valor">Valor: R$ {{ item.valor }}</p>
+        </div>
+        {% endfor %} {% else %}
+        <p>Nenhum prato encontrado.</p>
+        {% endif %}
+      </div>
+      <div id="bebidas" class="content-section" style="display: none">
+        {% if bebidas %} {% for item in bebidas %}
+        <div class="item-card">
+          <h3 class="item-name">{{ item.nome }}</h3>
+          {% if item.imagem %}
+          <img
+            class="item-image"
+            src="data:image/jpeg;base64,{{ item.imagem }}"
+            alt="{{ item.nome }}"
+          />
+          {% endif %}
+          <p class="item-description">{{ item.descricao }}</p>
+          <p class="item-valor">Valor: R$ {{ item.valor }}</p>
+        </div>
+        {% endfor %} {% else %}
+        <p>Nenhuma bebida encontrada.</p>
+        {% endif %}
+      </div>
+      <div id="sobremesas" class="content-section" style="display: none">
+        {% if sobremesas %} {% for item in sobremesas %}
+        <div class="item-card">
+          <h3 class="item-name">{{ item.nome }}</h3>
+          {% if item.imagem %}
+          <img
+            class="item-image"
+            src="data:image/jpeg;base64,{{ item.imagem }}"
+            alt="{{ item.nome }}"
+          />
+          {% endif %}
+          <p class="item-description">{{ item.descricao }}</p>
+          <p class="item-valor">Valor: R$ {{ item.valor }}</p>
+        </div>
+        {% endfor %} {% else %}
+        <p>Nenhuma sobremesa encontrada.</p>
+        {% endif %}
+      </div>
+    </div>
+    <div id="error-message" class="error-message"></div>
+
+    <!-- Você poderá incluir algum JavaScript se necessário para a funcionalidade das abas -->
+    <script>
+      const tabButtons = document.querySelectorAll(".tab-button");
+      const sections = document.querySelectorAll(".content-section");
+
+      tabButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          // Remove a classe active de todos os botões e esconde todas as seções
+          tabButtons.forEach((btn) => btn.classList.remove("active"));
+          sections.forEach((sec) => (sec.style.display = "none"));
+
+          // Ativa o botão clicado e exibe a seção correspondente
+          button.classList.add("active");
+          const tab = button.getAttribute("data-tab");
+          document.getElementById(tab).style.display = "flex";
+        });
+      });
+    </script>
+  </body>
+</html>

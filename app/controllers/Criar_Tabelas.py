@@ -28,7 +28,7 @@ def create_tables():
             nome VARCHAR(100) NOT NULL,
             email VARCHAR(150) UNIQUE NOT NULL,
             senha VARCHAR(255) NOT NULL,
-            qr_code TEXT,
+            qr_code BYTEA,
             link TEXT
         );""",
         """CREATE TABLE IF NOT EXISTS pratos (

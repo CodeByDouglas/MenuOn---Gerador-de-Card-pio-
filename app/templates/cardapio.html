@@ -8,10 +8,35 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/cardapio.css') }}"
     />
+    <style>
+      /* Additional style for the download button */
+      .download-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background-color: #d7263d;
+        color: #fffff7;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .download-btn:hover {
+        background-color: #c31f35;
+      }
+      .cardapio-header {
+        position: relative;
+      }
+    </style>
   </head>
   <body>
     <div class="cardapio-header">
       <h1>Cardápio</h1>
+      <!-- Download QR Code button added at top-right -->
+      <button id="download-qr-btn" class="download-btn">
+        Download QR Code
+      </button>
       <div class="tabs">
         <button class="tab-button active" data-tab="pratos">Pratos</button>
         <button class="tab-button" data-tab="bebidas">Bebidas</button>
@@ -25,5 +50,41 @@
     </div>
     <div id="error-message" class="error-message"></div>
     <script src="{{ url_for('static', filename='JS/cardapio.js') }}"></script>
+    <script>
+      // Add event listener to the download QR Code button.
+      document
+        .getElementById("download-qr-btn")
+        .addEventListener("click", async () => {
+          // Retrieve restaurant ID from localStorage
+          const restauranteId = localStorage.getItem("user_id");
+          if (!restauranteId) {
+            alert("ID do restaurante não encontrado.");
+            return;
+          }
+          try {
+            const response = await fetch("/consultar-qrcode", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ restaurante_id: restauranteId }),
+            });
+            const data = await response.json();
+            if (!response.ok) {
+              alert(data.error || "Erro ao obter QR Code.");
+              return;
+            }
+            // Create a temporary link element for download
+            const qrCodeBase64 = data.qr_code;
+            const downloadLink = document.createElement("a");
+            downloadLink.href = "data:image/png;base64," + qrCodeBase64;
+            downloadLink.download = "qrcode.png";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+          } catch (err) {
+            alert("Erro ao fazer download do QR Code.");
+            console.error(err);
+          }
+        });
+    </script>
   </body>
 </html>

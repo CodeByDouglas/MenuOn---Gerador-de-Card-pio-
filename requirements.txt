@@ -1,10 +1,17 @@
 blinker==1.9.0
+certifi==2025.4.26
+charset-normalizer==3.4.2
 click==8.1.8
 Flask==3.1.0
+idna==3.10
 itsdangerous==2.2.0
 Jinja2==3.1.6
 MarkupSafe==3.0.2
+pillow==11.2.1
 psycopg2==2.9.10
 psycopg2-binary==2.9.10
 python-dotenv==1.1.0
+qrcode==8.2
+requests==2.32.3
+urllib3==2.4.0
 Werkzeug==3.1.3

@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from app.services.def_cadastrar_user import cadastrar_user as cadastrar_service
+from app.services.def_gerar_QRcode import gerar_qrcode
 
 cadastrar_user = Blueprint('cadastrar_user', __name__)
 
@@ -30,6 +31,9 @@ def cadastrar_user_endpoint():
     result = cadastrar_service(nome, email, senha)
     
     if result is not False:
+        # Gera o QR Code usando a URL construída com o ID do restaurante/cadastrado
+        url = f"https://zany-space-computing-machine-7vrr9w7rv59whp6qv-5000.app.github.dev/cardapio/{result}"
+        gerar_qrcode(url, result)
         return jsonify({"user_id": result}), 200
     else:
         return jsonify({"error": "não foi possível cadastrar esse usuário"}), 404
