@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.sevices.def_cadastrar_user import cadastrar_user as cadastrar_service
+from app.services.def_cadastrar_user import cadastrar_user as cadastrar_service
 
 cadastrar_user = Blueprint('cadastrar_user', __name__)
 

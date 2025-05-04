@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.sevices.def_cadastrar_cardapio import cadastrar_cardapio as cadastrar_cardapio_service
+from app.services.def_cadastrar_cardapio import cadastrar_cardapio as cadastrar_cardapio_service
 import psycopg2
 
 cadastrar_cardapio = Blueprint('cadastrar_cardapio', __name__)
